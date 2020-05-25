@@ -1,0 +1,36 @@
+{% extends 'navbar.html' %}
+{% load static %}
+{% block body %}
+
+{% if user.username == 'hr' or user.username == 'receptionist' %}
+<div class="container">
+    <h2 class="text-center" style="margin-top: 50px;">Dashboard</h2>
+<br><br>
+    <div class="row">
+        <div class="col-sm-4 text-center">
+            <h2 style="color: darkgray;">{{d}}</h2>
+            <a href="{% url 'hospital:view_doctor' %}"><h4 style="color: crimson;">Doctors</h4>
+            <hr class="rounded"></a>
+        </div>
+
+
+        <div class="col-sm-4 text-center">
+            <h2 style="color: darkgray;">{{p}}</h2>
+            <a href="{% url 'hospital:view_patient' %}"><h4 style="color: crimson;">Patient</h4></a>
+        </div>
+
+        <div class="col-sm-4 text-center">
+            <h2 style="color: darkgray;">{{a}}</h2>
+            <a href="{% url 'hospital:view_appointment' %}"><h4 style="color: crimson;">Appointments</h4></a>
+        </div>
+    </div>
+{% else %}
+<div class="container" style="margin-top:50px">
+    <h2 class="text-center">Multispecialist Hospital</h2>
+    <br><br>
+    <h4 class="text-center">Choose Your Hospital Like Your Life Depends on It</h4>
+</div>
+{% endif %}
+
+</div>
+{% endblock %}

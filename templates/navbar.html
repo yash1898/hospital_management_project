@@ -1,0 +1,91 @@
+{% load static %}
+<html>
+    <head>
+        <title>Hospital management system</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous"></head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="{% static mystyle.css %}">
+    </head>
+
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+        <div class="container">
+        <a class="navbar-brand" href="#">Hospital Management System</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#myMenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="myMenu">
+            <ul class="navbar-nav text-center ml-auto">
+                {% if user.username == 'hr' or user.username == 'receptionist' %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'hospital:home' %}">Home</a></li>
+                {% else %}
+                <li class="nav-item"><a class="nav-link" href="{% url 'hospital:home' %}">Home</a></li>
+                {% endif %}
+
+                <li class="nav-item"><a class="nav-link" href="{% url 'hospital:aboutus' %}">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'hospital:contact' %}">Contact</a></li>
+                
+
+                {% if not user.is_authenticated %}
+                <li class="nav-item"><a class="nav-link" href="{% url 'hospital:register' %}">Register</a></li>
+                {% endif %}
+
+                {% if not user.is_authenticated %}
+                <li class="nav-item"><a class="nav-link" href="{% url 'hospital:login' %}">Login</a></li>
+                {% endif %}
+                
+                {% if request.user.username == 'hr' %}
+                <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">Doctor</a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="{% url 'hospital:add_doctor' %}">Add Doctor</a>
+                    <a class="dropdown-item" href="{% url 'hospital:view_doctor' %}">View Doctor</a>
+                </div>
+                </li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'hospital:view_patient' %}">Patients</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'hospital:view_appointment' %}">Appointments</a></li>
+                {% endif %}
+
+                {% if request.user.username == 'receptionist' %}
+
+                <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">Patient</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="{% url 'hospital:add_patient' %}">Add Patient</a>
+                        <a class="dropdown-item" href="{% url 'hospital:view_patient' %}">View Patient</a>
+                    </div>
+                </li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'hospital:view_doctor' %}">Doctor</a></li>
+                <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">Appointment</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="{% url 'hospital:add_appointment' %}">Add Appointment</a>
+                        <a class="dropdown-item" href="{% url 'hospital:view_appointment' %}">View Appointments</a>
+                    </div>
+                </li>
+                {% endif %}
+
+                {% if user.is_authenticated %}
+                <li class="nav-item"><a class="nav-link" href="{% url 'hospital:logout' %}">Logout</a></li>
+                {% endif %}
+            </ul>
+        </div>
+        </div>
+    </nav>
+    <div class="container" style="margin-top:50px">
+        {% if request.user.username == 'hr' %}
+            <h2 class="text-right">HR Dashboard</h2>
+        {% elif request.user.username == 'receptionist' %}
+            <h2 class="text-right">Receptionist Dashboard</h2>
+        {% elif not user.is_authenticated%}
+            <h2 class="text-right"></h2>
+        {% else %}
+        <h2 class="text-right">Patient Dashboard</h2>
+        {% endif %}
+
+        
+ 
+    {% block body %}
+    {% endblock %}
+</html>
