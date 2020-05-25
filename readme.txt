@@ -14,4 +14,6 @@ Steps to start project:
 2) create virtual environment command='virtualenv Name_of_VirtualEnv'....for windows
 3) do all migrations using command 'python manage.py makemigrations' and then 'pyhton manage.py migrate'
 4) then type command 'python manage.py runserver'
-5) Then go to browser and type ' http://127.0.0.1:8000/'
+5) Then go to browser and type ' http://127.0.0.1:8000/' in local browser
+
+
